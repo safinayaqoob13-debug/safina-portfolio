@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Link } from 'wouter';
 import { ArrowRight, Coffee, Star, MapPin } from 'lucide-react';
 import heroImg from '@assets/generated_images/hero.jpg';
+import { trackButtonClick } from '@/lib/analytics';
 
 export default function Home() {
   return (
@@ -56,14 +57,16 @@ export default function Home() {
             transition={{ duration: 0.8, delay: 0.8 }}
             className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto"
           >
-            <Link 
-              href="/order" 
+            <Link
+              href="/order"
+              onClick={() => trackButtonClick('order_online', 'hero')}
               className="inline-flex items-center justify-center px-8 py-4 bg-primary text-primary-foreground text-lg font-medium rounded-md hover:bg-primary/90 transition-all shadow-[0_0_20px_rgba(212,175,55,0.3)] hover:shadow-[0_0_30px_rgba(212,175,55,0.5)]"
             >
               Order Online
             </Link>
-            <Link 
-              href="/reservations" 
+            <Link
+              href="/reservations"
+              onClick={() => trackButtonClick('reserve_table', 'hero')}
               className="inline-flex items-center justify-center px-8 py-4 bg-transparent border border-white text-white text-lg font-medium rounded-md hover:bg-white hover:text-black transition-all"
             >
               Reserve a Table
@@ -190,7 +193,11 @@ export default function Home() {
               </p>
               <div className="flex items-center gap-4">
                 <span className="text-2xl font-bold text-primary">Rs. 650</span>
-                <Link href="/order" className="px-6 py-2 bg-foreground text-background font-medium rounded-md hover:bg-foreground/90 transition-colors">
+                <Link
+                  href="/order"
+                  onClick={() => trackButtonClick('order_now', 'todays_special')}
+                  className="px-6 py-2 bg-foreground text-background font-medium rounded-md hover:bg-foreground/90 transition-colors"
+                >
                   Order Now
                 </Link>
               </div>
@@ -215,8 +222,9 @@ export default function Home() {
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-10">
             Join us for a moment of luxury. Whether it's a quick pick-me-up or a lingering evening.
           </p>
-          <Link 
-            href="/reservations" 
+          <Link
+            href="/reservations"
+            onClick={() => trackButtonClick('book_table', 'cta_section')}
             className="inline-flex items-center justify-center px-8 py-4 bg-primary text-primary-foreground text-lg font-medium rounded-md hover:bg-primary/90 transition-all"
           >
             Book Your Table

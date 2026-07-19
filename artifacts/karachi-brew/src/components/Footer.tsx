@@ -3,6 +3,7 @@ import { Link } from 'wouter';
 import { FaInstagram, FaFacebookF, FaTiktok } from 'react-icons/fa';
 import { Coffee, ArrowRight } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { trackNewsletterSignup, trackSocialClick } from '@/lib/analytics';
 
 export function Footer() {
   const [email, setEmail] = useState('');
@@ -11,7 +12,11 @@ export function Footer() {
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
     if (!email) return;
-    
+
+    // Track newsletter signup — pass domain only, never the full address
+    const domain = email.split('@')[1];
+    trackNewsletterSignup(domain);
+
     toast({
       title: "Subscribed Successfully!",
       description: "You'll now receive our latest updates and offers.",
@@ -35,13 +40,13 @@ export function Footer() {
               Where specialty coffee meets warmth and craftsmanship. The perfect escape in the heart of Karachi.
             </p>
             <div className="flex gap-4 pt-2">
-              <a href="#" className="w-10 h-10 rounded-full bg-secondary/10 flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-all duration-300">
+              <a href="#" onClick={() => trackSocialClick('instagram', 'footer')} className="w-10 h-10 rounded-full bg-secondary/10 flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-all duration-300">
                 <FaInstagram className="w-5 h-5" />
               </a>
-              <a href="#" className="w-10 h-10 rounded-full bg-secondary/10 flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-all duration-300">
+              <a href="#" onClick={() => trackSocialClick('facebook', 'footer')} className="w-10 h-10 rounded-full bg-secondary/10 flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-all duration-300">
                 <FaFacebookF className="w-4 h-5" />
               </a>
-              <a href="#" className="w-10 h-10 rounded-full bg-secondary/10 flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-all duration-300">
+              <a href="#" onClick={() => trackSocialClick('tiktok', 'footer')} className="w-10 h-10 rounded-full bg-secondary/10 flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-all duration-300">
                 <FaTiktok className="w-5 h-5" />
               </a>
             </div>

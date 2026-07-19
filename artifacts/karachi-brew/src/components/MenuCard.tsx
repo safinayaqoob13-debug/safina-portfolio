@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Plus, Check } from 'lucide-react';
 import { useCart, CartItem } from '@/context/cart';
 import { useToast } from '@/hooks/use-toast';
+import { trackAddToCart } from '@/lib/analytics';
 
 interface MenuCardProps {
   item: {
@@ -30,10 +31,12 @@ export function MenuCard({ item }: MenuCardProps) {
       image: item.image,
       category: item.category
     });
-    
+
+    trackAddToCart(item.id, item.name, item.price, item.category);
+
     setIsAdded(true);
     setTimeout(() => setIsAdded(false), 2000);
-    
+
     toast({
       title: "Added to Cart",
       description: `${item.name} has been added to your order.`,

@@ -2,6 +2,7 @@ import React from 'react';
 import { MapPin, Phone, Mail, Clock } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { FaInstagram, FaFacebookF, FaTiktok, FaWhatsapp } from 'react-icons/fa';
+import { trackWhatsAppClick, trackSocialClick } from '@/lib/analytics';
 
 export default function Contact() {
   return (
@@ -92,16 +93,22 @@ export default function Contact() {
             >
               <h3 className="font-serif font-bold text-lg mb-4">Follow Us</h3>
               <div className="flex gap-4">
-                <a href="#" className="w-12 h-12 rounded-full bg-secondary/10 flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-all">
+                <a href="#" onClick={() => trackSocialClick('instagram', 'contact_page')} className="w-12 h-12 rounded-full bg-secondary/10 flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-all">
                   <FaInstagram className="w-5 h-5" />
                 </a>
-                <a href="#" className="w-12 h-12 rounded-full bg-secondary/10 flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-all">
+                <a href="#" onClick={() => trackSocialClick('facebook', 'contact_page')} className="w-12 h-12 rounded-full bg-secondary/10 flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-all">
                   <FaFacebookF className="w-5 h-5" />
                 </a>
-                <a href="#" className="w-12 h-12 rounded-full bg-secondary/10 flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-all">
+                <a href="#" onClick={() => trackSocialClick('tiktok', 'contact_page')} className="w-12 h-12 rounded-full bg-secondary/10 flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-all">
                   <FaTiktok className="w-5 h-5" />
                 </a>
-                <a href="https://wa.me/923001234567" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full bg-[#25D366]/20 text-[#25D366] flex items-center justify-center hover:bg-[#25D366] hover:text-white transition-all">
+                <a
+                  href="https://wa.me/923001234567"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => trackWhatsAppClick('contact_page')}
+                  className="w-12 h-12 rounded-full bg-[#25D366]/20 text-[#25D366] flex items-center justify-center hover:bg-[#25D366] hover:text-white transition-all"
+                >
                   <FaWhatsapp className="w-6 h-6" />
                 </a>
               </div>

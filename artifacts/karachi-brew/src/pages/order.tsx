@@ -4,6 +4,7 @@ import { Link } from 'wouter';
 import { ShoppingBag, Minus, Plus, Trash2, MapPin, Truck } from 'lucide-react';
 import { useCart } from '@/context/cart';
 import { useToast } from '@/hooks/use-toast';
+import { trackCheckoutStarted, trackOrderPlaced } from '@/lib/analytics';
 
 export default function OrderOnline() {
   const { items, updateQty, removeItem, total, clearCart, itemCount } = useCart();
@@ -14,6 +15,7 @@ export default function OrderOnline() {
 
   const handleCheckout = (e: React.FormEvent) => {
     e.preventDefault();
+    trackOrderPlaced(finalTotal, itemCount, orderMode);
     setOrderComplete(true);
     toast({
       title: "Order Placed Successfully!",
@@ -154,8 +156,11 @@ export default function OrderOnline() {
                 </div>
 
                 {!isCheckingOut ? (
-                  <button 
-                    onClick={() => setIsCheckingOut(true)}
+                  <button
+                    onClick={() => {
+                      trackCheckoutStarted(finalTotal, itemCount, orderMode);
+                      setIsCheckingOut(true);
+                    }}
                     className="w-full py-3 bg-primary text-primary-foreground rounded-md font-medium text-lg hover:bg-primary/90 transition-all shadow-md"
                   >
                     Proceed to Checkout

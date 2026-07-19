@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Calendar, Clock, Users, User, Phone, Mail, CheckCircle } from 'lucide-react';
+import { trackReservationSubmit } from '@/lib/analytics';
 
 export default function Reservations() {
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -15,6 +16,7 @@ export default function Reservations() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    trackReservationSubmit(formData.guests, formData.date, formData.time);
     setIsSubmitted(true);
     // Real implementation would post to an API here
   };

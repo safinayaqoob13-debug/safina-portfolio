@@ -12,6 +12,9 @@ import { AnimatedBackground } from '@/components/AnimatedBackground';
 import { ScrollProgress } from '@/components/ScrollProgress';
 import { BackToTop } from '@/components/BackToTop';
 import { WhatsAppButton } from '@/components/WhatsAppButton';
+import { usePageView } from '@/hooks/use-page-view';
+import { useOutboundLinks } from '@/hooks/use-outbound-links';
+import { useScrollDepth } from '@/hooks/use-scroll-depth';
 
 import NotFound from '@/pages/not-found';
 import Home from '@/pages/home';
@@ -25,9 +28,18 @@ import Contact from '@/pages/contact';
 
 const queryClient = new QueryClient();
 
+/** Mounts all analytics observers inside the Router (needs WouterRouter context). */
+function AnalyticsObserver() {
+  usePageView();
+  useOutboundLinks();
+  useScrollDepth();
+  return null;
+}
+
 function Router() {
   return (
     <div className="min-h-screen flex flex-col">
+      <AnalyticsObserver />
       <Navbar />
       <main className="flex-grow pt-[72px]">
         <Switch>
